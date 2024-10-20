@@ -86,10 +86,43 @@ class ProductController extends Controller
      * )
      */
 
+    /**
+     * @OA\Get(
+     *     path="/api/products/{id}",
+     *     summary="Get product by ID",
+     *     tags={"Product"},
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         description="Product ID",
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Response(response="200", description="Product retrieved successfully",
+     *         @OA\JsonContent(ref="#/components/schemas/Product")
+     *     ),
+     *     @OA\Response(response="404", description="Product not found")
+     * )
+     */
     public function show($id)
     {
-        return Product::findOrFail($id);
+        try {
+            $product = Product::findOrFail($id);
+            return response()->json($product, 200);
+        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
+            return response()->json(['error' => 'Product not found'], 404);
+        }
     }
+    /**
+     * @OA\Schema(
+     *     schema="Product",
+     *     type="object",
+     *     @OA\Property(property="id", type="integer", format="int64"),
+     *     @OA\Property(property="name", type="string"),
+     *     @OA\Property(property="price", type="number", format="float"),
+     *     @OA\Property(property="description", type="string"),
+     * )
+     */
 
     public function update(Request $request, $id)
     {
