@@ -118,26 +118,137 @@
                         "description": "Product not found"
                     }
                 }
+            },
+            "put": {
+                "tags": [
+                    "Product"
+                ],
+                "summary": "Update a product by ID",
+                "operationId": "416e4959a3919547eb609d87e3db9135",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Product ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Updated Product Name"
+                                    },
+                                    "price": {
+                                        "type": "number",
+                                        "format": "float",
+                                        "example": 29.99
+                                    },
+                                    "description": {
+                                        "type": "string",
+                                        "example": "Updated Product Description"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Product updated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Product updated successfully"
+                                        },
+                                        "product": {
+                                            "$ref": "#/components/schemas/Product"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Product not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Product not found"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Failed to update product",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Failed to update product"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Detailed error message"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
             }
         }
     },
     "components": {
         "schemas": {
             "Product": {
+                "title": "Product",
+                "description": "Product model",
                 "properties": {
                     "id": {
+                        "description": "Product ID",
                         "type": "integer",
-                        "format": "int64"
+                        "format": "int64",
+                        "example": 1
                     },
                     "name": {
-                        "type": "string"
+                        "description": "Product name",
+                        "type": "string",
+                        "example": "Sample Product"
                     },
                     "price": {
+                        "description": "Product price",
                         "type": "number",
-                        "format": "float"
+                        "format": "float",
+                        "example": 19.99
                     },
                     "description": {
-                        "type": "string"
+                        "description": "Product description",
+                        "type": "string",
+                        "example": "This is a sample product description.",
+                        "nullable": true
                     }
                 },
                 "type": "object"
