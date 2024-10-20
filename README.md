@@ -1,6 +1,6 @@
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
-## About This Application
+## About This Application ##
 - This application is a back-end application and requires the [FrontendApp](https://github.com/irwansyah1998/FrontendApp) for the user interface.
 - This application uses Swagger for API documentation.
 - It is built with PHP 8.1 and Laravel version 10.
@@ -20,7 +20,7 @@ Follow these steps to set up the application:
 
 1. **Clone the Repository**
 
-**Open your terminal and run the following command to clone the repository:**
+Open your terminal and run the following command to clone the repository:
 
 ```
 git clone https://github.com/irwansyah1998/BackendApp.git
