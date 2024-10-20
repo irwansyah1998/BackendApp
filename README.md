@@ -20,7 +20,7 @@ Follow these steps to set up the application:
 
 1. **Clone the Repository**
 
-Open your terminal and run the following command to clone the repository:
+**Open your terminal and run the following command to clone the repository:**
 
 ```
 git clone https://github.com/irwansyah1998/BackendApp.git
