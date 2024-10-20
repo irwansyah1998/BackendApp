@@ -51,3 +51,55 @@ Create a copy of the `.env.example` file and rename it to `.env`:
 ```
 cp .env.example .env
 ```
+
+5. **Generate Application Key**
+
+Generate a new application key by running:
+
+```
+php artisan key:generate
+```
+
+6. **Configure Database**
+
+Open the `.env` file and update the database configuration as follows:
+
+```
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=your_database_name
+DB_USERNAME=your_database_user
+DB_PASSWORD=your_database_password
+```
+Replace `your_database_name`, `your_database_user`, and `your_database_password` with your actual database credentials.
+
+7. **Run Migrations**
+
+Run the following command to create the database tables:
+
+```
+php artisan migrate
+```
+
+8. **Run the Application**
+
+Start the development server with the following command:
+
+```
+php artisan serve
+```
+
+The application will be accessible at `http://localhost:8000`.
+
+### Accessing Swagger Documentation
+
+Once your application is running, you can access the Swagger documentation at:
+
+```
+http://localhost:8000/api/documentation
+```
+
+### Conclusion
+
+You have successfully set up the application. For further details on usage, refer to the API documentation or the FrontendApp repository.
