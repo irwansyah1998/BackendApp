@@ -2,35 +2,45 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Seeder;
 use App\Models\User;
+use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 
 class UserSeeder extends Seeder
 {
     /**
-     * Run the database seeds.
+     * Create default users for login and development testing.
      *
-     * @return void
+     * This seeder is useful for quick local testing when you want a ready-made
+     * account without manually creating a user through the application.
      */
-    public function run()
+    public function run(): void
     {
-        User::create([
-            'name' => 'User One',
-            'email' => 'user1@example.com',
-            'password' => Hash::make('password1'),
-        ]);
+        // Default admin-like user for login testing.
+        User::firstOrCreate(
+            ['email' => 'user1@example.com'],
+            [
+                'name' => 'User One',
+                'password' => Hash::make('password1'),
+            ]
+        );
 
-        User::create([
-            'name' => 'User Two',
-            'email' => 'user2@example.com',
-            'password' => Hash::make('password2'),
-        ]);
+        // Additional sample user for general testing.
+        User::firstOrCreate(
+            ['email' => 'user2@example.com'],
+            [
+                'name' => 'User Two',
+                'password' => Hash::make('password2'),
+            ]
+        );
 
-        User::create([
-            'name' => 'User Three',
-            'email' => 'user3@example.com',
-            'password' => Hash::make('password3'),
-        ]);
+        // Third sample user to simulate multiple accounts.
+        User::firstOrCreate(
+            ['email' => 'user3@example.com'],
+            [
+                'name' => 'User Three',
+                'password' => Hash::make('password3'),
+            ]
+        );
     }
 }
