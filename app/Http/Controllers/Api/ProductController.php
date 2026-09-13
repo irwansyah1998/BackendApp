@@ -107,17 +107,17 @@ class ProductController extends Controller
             'description' => 'nullable|string',
         ]);
 
-        return Product::create($validated);
+        return response()->json(Product::create($validated), 201);
     }
 
     /**
      * @OA\Get(
-     *     path="/api/products/{id}",
+     *     path="/api/products/{product}",
      *     tags={"Products"},
      *     summary="Dapatkan produk berdasarkan ID",
      *     description="Mengembalikan informasi produk",
      *     @OA\Parameter(
-     *         name="id",
+     *         name="product",
      *         in="path",
      *         required=true,
      *         description="ID produk",
@@ -137,23 +137,18 @@ class ProductController extends Controller
      *     )
      * )
      */
-    public function show($id)
+    public function show(Product $product)
     {
-        try {
-            $product = Product::findOrFail($id);
-            return response()->json($product, 200);
-        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
-            return response()->json(['error' => 'Product not found'], 404);
-        }
+        return response()->json($product, 200);
     }
 
     /**
      * @OA\Put(
-     *     path="/api/products/{id}",
+     *     path="/api/products/{product}",
      *     summary="Update a product by ID",
      *     tags={"Products"},
      *     @OA\Parameter(
-     *         name="id",
+     *         name="product",
      *         in="path",
      *         required=true,
      *         description="Product ID",
@@ -181,60 +176,33 @@ class ProductController extends Controller
      *         @OA\JsonContent(
      *             @OA\Property(property="error", type="string", example="Product not found")
      *         )
-     *     ),
-     *     @OA\Response(
-     *         response=500,
-     *         description="Failed to update product",
-     *         @OA\JsonContent(
-     *             @OA\Property(property="error", type="string", example="Failed to update product"),
-     *             @OA\Property(property="message", type="string", example="Detailed error message")
-     *         )
      *     )
      * )
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Product $product)
     {
-        // Validasi input
         $validated = $request->validate([
             'name' => 'sometimes|required|string|max:255',
             'price' => 'sometimes|required|numeric',
             'description' => 'nullable|string',
         ]);
 
-        try {
-            // Cari product berdasarkan ID, jika tidak ditemukan akan melempar ModelNotFoundException
-            $product = Product::findOrFail($id);
+        $product->update($validated);
 
-            // Update data product
-            $product->update($validated);
-
-            // Kembalikan respon berhasil
-            return response()->json([
-                'message' => 'Product updated successfully',
-                'product' => $product
-            ], 200);
-        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
-            // Jika produk tidak ditemukan, kembalikan respon 404
-            return response()->json([
-                'error' => 'Product not found'
-            ], 404);
-        } catch (\Exception $e) {
-            // Jika ada error lain, kembalikan respon 500
-            return response()->json([
-                'error' => 'Failed to update product',
-                'message' => $e->getMessage()
-            ], 500);
-        }
+        return response()->json([
+            'message' => 'Product updated successfully',
+            'product' => $product,
+        ], 200);
     }
 
     /**
      * @OA\Delete(
-     *     path="/api/products/{id}",
+     *     path="/api/products/{product}",
      *     tags={"Products"},
      *     summary="Hapus produk",
      *     description="Menghapus produk berdasarkan ID",
      *     @OA\Parameter(
-     *         name="id",
+     *         name="product",
      *         in="path",
      *         required=true,
      *         description="ID produk yang akan dihapus",
@@ -250,31 +218,13 @@ class ProductController extends Controller
      *         @OA\JsonContent(
      *             @OA\Property(property="error", type="string", example="Product not found")
      *         )
-     *     ),
-     *     @OA\Response(
-     *         response=500,
-     *         description="Gagal menghapus produk",
-     *         @OA\JsonContent(
-     *             @OA\Property(property="error", type="string", example="Failed to delete product"),
-     *             @OA\Property(property="message", type="string", example="Detailed error message")
-     *         )
      *     )
      * )
      */
-    public function destroy($id)
+    public function destroy(Product $product)
     {
-        try {
-            $product = Product::findOrFail($id);
-            $product->delete();
+        $product->delete();
 
-            return response()->json(null, 204);
-        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
-            return response()->json(['error' => 'Product not found'], 404);
-        } catch (\Exception $e) {
-            return response()->json([
-                'error' => 'Failed to delete product',
-                'message' => $e->getMessage()
-            ], 500);
-        }
+        return response()->json(null, 204);
     }
 }
