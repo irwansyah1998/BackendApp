@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Product;
 use Illuminate\Database\Seeder;
 
 class ProductSeeder extends Seeder
@@ -10,22 +10,24 @@ class ProductSeeder extends Seeder
     /**
      * Run the database seeds.
      */
-    public function run()
+    public function run(): void
     {
-        User::create([
+        Product::create([
             'name' => 'Apel',
-            'price' => 'user1@example.com',
-            'description' => '1000',
+            'price' => 10000,
+            'description' => 'Buah apel segar',
         ]);
-        User::create([
+
+        Product::create([
             'name' => 'Jeruk',
-            'price' => 'user1@example.com',
-            'description' => '1000',
+            'price' => 12000,
+            'description' => 'Jeruk manis dan segar',
         ]);
-        User::create([
+
+        Product::create([
             'name' => 'Mangga',
-            'price' => 'user1@example.com',
-            'description' => '1000',
+            'price' => 15000,
+            'description' => 'Mangga harum manis',
         ]);
     }
 }
