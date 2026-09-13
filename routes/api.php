@@ -16,8 +16,7 @@ use App\Http\Controllers\Api\UserController;
 |
 */
 
-Route::apiResource('products', ProductController::class);
-
-// Route::middleware('apikey')->get('/user', [UserController::class, 'index']);
-
-Route::apiResource('user', UserController::class);
+Route::middleware('apikey')->group(function () {
+    Route::apiResource('products', ProductController::class);
+    Route::apiResource('user', UserController::class);
+});
