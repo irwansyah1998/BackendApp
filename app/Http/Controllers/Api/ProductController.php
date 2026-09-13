@@ -74,30 +74,22 @@ class ProductController extends Controller
      *     )
      * )
      */
+    /**
+     * Get all products from the database.
+     *
+     * This method is used to retrieve the full product list for the client app.
+     * It returns every product record currently saved in the products table.
+     */
     public function index()
     {
         return Product::all();
     }
 
     /**
-     * @OA\Post(
-     *     path="/api/products",
-     *     summary="Create a new product",
-     *     tags={"Products"},
-     *     @OA\RequestBody(
-     *         required=true,
-     *         @OA\JsonContent(
-     *             required={"name", "price"},
-     *             @OA\Property(property="name", type="string", example="Product Name"),
-     *             @OA\Property(property="price", type="number", format="float", example=19.99),
-     *             @OA\Property(property="description", type="string", example="Product Description")
-     *         )
-     *     ),
-     *     @OA\Response(response=201, description="Product created successfully",
-     *         @OA\JsonContent(ref="#/components/schemas/Product")
-     *     ),
-     *     @OA\Response(response=400, description="Invalid input")
-     * )
+     * Create a new product.
+     *
+     * This method validates the incoming request, then saves a new product record.
+     * It is used for adding new items to the catalog or inventory list.
      */
     public function store(Request $request)
     {
@@ -111,31 +103,10 @@ class ProductController extends Controller
     }
 
     /**
-     * @OA\Get(
-     *     path="/api/products/{product}",
-     *     tags={"Products"},
-     *     summary="Dapatkan produk berdasarkan ID",
-     *     description="Mengembalikan informasi produk",
-     *     @OA\Parameter(
-     *         name="product",
-     *         in="path",
-     *         required=true,
-     *         description="ID produk",
-     *         @OA\Schema(type="integer")
-     *     ),
-     *     @OA\Response(
-     *         response=200,
-     *         description="Produk ditemukan",
-     *         @OA\JsonContent(ref="#/components/schemas/Product")
-     *     ),
-     *     @OA\Response(
-     *         response=404,
-     *         description="Produk tidak ditemukan",
-     *         @OA\JsonContent(
-     *             @OA\Property(property="error", type="string", example="Product not found")
-     *         )
-     *     )
-     * )
+     * Show one product by its ID.
+     *
+     * Laravel resolves the product from the route parameter automatically.
+     * This is useful when fetching detailed information for a single item.
      */
     public function show(Product $product)
     {
@@ -143,41 +114,10 @@ class ProductController extends Controller
     }
 
     /**
-     * @OA\Put(
-     *     path="/api/products/{product}",
-     *     summary="Update a product by ID",
-     *     tags={"Products"},
-     *     @OA\Parameter(
-     *         name="product",
-     *         in="path",
-     *         required=true,
-     *         description="Product ID",
-     *         @OA\Schema(type="integer")
-     *     ),
-     *     @OA\RequestBody(
-     *         required=true,
-     *         @OA\JsonContent(
-     *             @OA\Property(property="name", type="string", example="Updated Product Name"),
-     *             @OA\Property(property="price", type="number", format="float", example=29.99),
-     *             @OA\Property(property="description", type="string", example="Updated Product Description")
-     *         )
-     *     ),
-     *     @OA\Response(
-     *         response=200,
-     *         description="Product updated successfully",
-     *         @OA\JsonContent(
-     *             @OA\Property(property="message", type="string", example="Product updated successfully"),
-     *             @OA\Property(property="product", ref="#/components/schemas/Product")
-     *         )
-     *     ),
-     *     @OA\Response(
-     *         response=404,
-     *         description="Product not found",
-     *         @OA\JsonContent(
-     *             @OA\Property(property="error", type="string", example="Product not found")
-     *         )
-     *     )
-     * )
+     * Update an existing product.
+     *
+     * This method validates the incoming fields and updates the selected product.
+     * It supports partial updates, so only the fields sent by the client are changed.
      */
     public function update(Request $request, Product $product)
     {
@@ -196,30 +136,10 @@ class ProductController extends Controller
     }
 
     /**
-     * @OA\Delete(
-     *     path="/api/products/{product}",
-     *     tags={"Products"},
-     *     summary="Hapus produk",
-     *     description="Menghapus produk berdasarkan ID",
-     *     @OA\Parameter(
-     *         name="product",
-     *         in="path",
-     *         required=true,
-     *         description="ID produk yang akan dihapus",
-     *         @OA\Schema(type="integer")
-     *     ),
-     *     @OA\Response(
-     *         response=204,
-     *         description="Berhasil menghapus produk"
-     *     ),
-     *     @OA\Response(
-     *         response=404,
-     *         description="Produk tidak ditemukan",
-     *         @OA\JsonContent(
-     *             @OA\Property(property="error", type="string", example="Product not found")
-     *         )
-     *     )
-     * )
+     * Delete a product record.
+     *
+     * This method removes the selected product from the database.
+     * It returns a 204 response to indicate successful deletion with no content.
      */
     public function destroy(Product $product)
     {
