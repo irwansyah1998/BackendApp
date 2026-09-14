@@ -7,73 +7,112 @@ use App\Models\Product;
 use Illuminate\Http\Request;
 use OpenApi\Annotations as OA;
 
-
-
 /**
- * @OA\Schema(
- *     schema="Product",
- *     type="object",
- *     title="Product",
- *     description="Product model",
- *     @OA\Property(
- *         property="id",
- *         description="Product ID",
- *         type="integer",
- *         format="int64",
- *         example=1
+ * @OA\PathItem(
+ *     path="/api/products",
+ *     @OA\Get(
+ *         path="/api/products",
+ *         tags={"Products"},
+ *         summary="Get all products",
+ *         description="Return a list of all available products.",
+ *         security={{"bearerAuth": {}}},
+ *         @OA\Response(
+ *             response=200,
+ *             description="Products retrieved successfully",
+ *             @OA\JsonContent(type="array", @OA\Items(ref="#/components/schemas/Product"))
+ *         ),
+ *         @OA\Response(response=401, description="Unauthorized")
  *     ),
- *     @OA\Property(
- *         property="name",
- *         description="Product name",
- *         type="string",
- *         example="Sample Product"
+ *     @OA\Post(
+ *         path="/api/products",
+ *         tags={"Products"},
+ *         summary="Create a new product",
+ *         description="Create and store a new product record.",
+ *         security={{"bearerAuth": {}}},
+ *         @OA\RequestBody(
+ *             required=true,
+ *             @OA\JsonContent(
+ *                 required={"name", "price"},
+ *                 @OA\Property(property="name", type="string", example="Keyboard"),
+ *                 @OA\Property(property="price", type="number", format="float", example=149000),
+ *                 @OA\Property(property="description", type="string", nullable=true, example="Mechanical keyboard")
+ *             )
+ *         ),
+ *         @OA\Response(
+ *             response=201,
+ *             description="Product created successfully",
+ *             @OA\JsonContent(ref="#/components/schemas/Product")
+ *         ),
+ *         @OA\Response(response=401, description="Unauthorized")
+ *     )
+ * )
+ *
+ * @OA\PathItem(
+ *     path="/api/products/{id}",
+ *     @OA\Get(
+ *         path="/api/products/{id}",
+ *         tags={"Products"},
+ *         summary="Get product by ID",
+ *         description="Retrieve a single product by its identifier.",
+ *         security={{"bearerAuth": {}}},
+ *         @OA\Parameter(
+ *             name="id",
+ *             in="path",
+ *             required=true,
+ *             description="Product ID",
+ *             @OA\Schema(type="integer")
+ *         ),
+ *         @OA\Response(
+ *             response=200,
+ *             description="Product retrieved successfully",
+ *             @OA\JsonContent(ref="#/components/schemas/Product")
+ *         ),
+ *         @OA\Response(response=401, description="Unauthorized")
  *     ),
- *     @OA\Property(
- *         property="price",
- *         description="Product price",
- *         type="number",
- *         format="float",
- *         example=19.99
+ *     @OA\Put(
+ *         path="/api/products/{id}",
+ *         tags={"Products"},
+ *         summary="Update a product",
+ *         description="Update an existing product record.",
+ *         security={{"bearerAuth": {}}},
+ *         @OA\Parameter(
+ *             name="id",
+ *             in="path",
+ *             required=true,
+ *             description="Product ID",
+ *             @OA\Schema(type="integer")
+ *         ),
+ *         @OA\RequestBody(
+ *             required=true,
+ *             @OA\JsonContent(
+ *                 @OA\Property(property="name", type="string", example="Keyboard Updated"),
+ *                 @OA\Property(property="price", type="number", format="float", example=159000),
+ *                 @OA\Property(property="description", type="string", nullable=true, example="Updated description")
+ *             )
+ *         ),
+ *         @OA\Response(response=200, description="Product updated successfully"),
+ *         @OA\Response(response=401, description="Unauthorized")
  *     ),
- *     @OA\Property(
- *         property="description",
- *         description="Product description",
- *         type="string",
- *         nullable=true,
- *         example="This is a sample product description."
- *     ),
- *     @OA\Property(
- *         property="created_at",
- *         description="Timestamp when the product was created",
- *         type="string",
- *         format="date-time",
- *         example="2024-01-01T12:00:00Z"
- *     ),
- *     @OA\Property(
- *         property="updated_at",
- *         description="Timestamp when the product was last updated",
- *         type="string",
- *         format="date-time",
- *         example="2024-01-02T12:00:00Z"
+ *     @OA\Delete(
+ *         path="/api/products/{id}",
+ *         tags={"Products"},
+ *         summary="Delete a product",
+ *         description="Delete a product record from the database.",
+ *         security={{"bearerAuth": {}}},
+ *         @OA\Parameter(
+ *             name="id",
+ *             in="path",
+ *             required=true,
+ *             description="Product ID",
+ *             @OA\Schema(type="integer")
+ *         ),
+ *         @OA\Response(response=204, description="Product deleted successfully"),
+ *         @OA\Response(response=401, description="Unauthorized")
  *     )
  * )
  */
-
 class ProductController extends Controller
 {
-    /**
-     * @OA\Get(
-     *     path="/api/products",
-     *     tags={"Products"},
-     *     summary="Dapatkan semua produk",
-     *     description="Mengembalikan daftar semua produk",
-     *     @OA\Response(
-     *         response=200,
-     *         description="Daftar produk",
-     *         @OA\JsonContent(type="array", @OA\Items(ref="#/components/schemas/Product"))
-     *     )
-     * )
-     */
     /**
      * Get all products from the database.
      *
