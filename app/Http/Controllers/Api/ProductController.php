@@ -67,10 +67,15 @@ class ProductController extends Controller
      *     tags={"Products"},
      *     summary="Dapatkan semua produk",
      *     description="Mengembalikan daftar semua produk",
+     *     security={{"bearerAuth": {}}},
      *     @OA\Response(
      *         response=200,
      *         description="Daftar produk",
      *         @OA\JsonContent(type="array", @OA\Items(ref="#/components/schemas/Product"))
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="Unauthorized"
      *     )
      * )
      */
@@ -85,6 +90,30 @@ class ProductController extends Controller
         return Product::all();
     }
 
+    /**
+     * @OA\Post(
+     *     path="/api/products",
+     *     tags={"Products"},
+     *     summary="Tambah produk baru",
+     *     description="Menyimpan produk baru ke database",
+     *     security={{"bearerAuth": {}}},
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             required={"name", "price"},
+     *             @OA\Property(property="name", type="string", example="Keyboard"),
+     *             @OA\Property(property="price", type="number", format="float", example=149000),
+     *             @OA\Property(property="description", type="string", nullable=true, example="Mechanical keyboard")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=201,
+     *         description="Produk berhasil dibuat",
+     *         @OA\JsonContent(ref="#/components/schemas/Product")
+     *     ),
+     *     @OA\Response(response=401, description="Unauthorized")
+     * )
+     */
     /**
      * Create a new product.
      *
@@ -103,6 +132,28 @@ class ProductController extends Controller
     }
 
     /**
+     * @OA\Get(
+     *     path="/api/products/{id}",
+     *     tags={"Products"},
+     *     summary="Lihat detail produk",
+     *     description="Mengambil data produk berdasarkan ID",
+     *     security={{"bearerAuth": {}}},
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         description="ID produk",
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Detail produk",
+     *         @OA\JsonContent(ref="#/components/schemas/Product")
+     *     ),
+     *     @OA\Response(response=401, description="Unauthorized")
+     * )
+     */
+    /**
      * Show one product by its ID.
      *
      * Laravel resolves the product from the route parameter automatically.
@@ -113,6 +164,35 @@ class ProductController extends Controller
         return response()->json($product, 200);
     }
 
+    /**
+     * @OA\Put(
+     *     path="/api/products/{id}",
+     *     tags={"Products"},
+     *     summary="Update produk",
+     *     description="Memperbarui data produk yang sudah ada",
+     *     security={{"bearerAuth": {}}},
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         description="ID produk",
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             @OA\Property(property="name", type="string", example="Keyboard Updated"),
+     *             @OA\Property(property="price", type="number", format="float", example=159000),
+     *             @OA\Property(property="description", type="string", nullable=true, example="Updated description")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Produk berhasil diupdate",
+     *     ),
+     *     @OA\Response(response=401, description="Unauthorized")
+     * )
+     */
     /**
      * Update an existing product.
      *
@@ -135,6 +215,24 @@ class ProductController extends Controller
         ], 200);
     }
 
+    /**
+     * @OA\Delete(
+     *     path="/api/products/{id}",
+     *     tags={"Products"},
+     *     summary="Hapus produk",
+     *     description="Menghapus produk dari database",
+     *     security={{"bearerAuth": {}}},
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         description="ID produk",
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Response(response=204, description="Produk berhasil dihapus"),
+     *     @OA\Response(response=401, description="Unauthorized")
+     * )
+     */
     /**
      * Delete a product record.
      *

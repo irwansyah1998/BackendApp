@@ -44,6 +44,35 @@ class UserController extends Controller
     }
 
     /**
+     * @OA\Post(
+     *     path="/api/login",
+     *     tags={"Auth"},
+     *     summary="Login and get token",
+     *     description="Authenticate user and return a Sanctum bearer token for protected API requests",
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             required={"email", "password"},
+     *             @OA\Property(property="email", type="string", format="email", example="user1@example.com"),
+     *             @OA\Property(property="password", type="string", format="password", example="password1")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Login successful",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="message", type="string", example="Login successful"),
+     *             @OA\Property(property="token", type="string", example="1|abcxyz123456"),
+     *             @OA\Property(property="user", ref="#/components/schemas/User")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="Invalid credentials"
+     *     )
+     * )
+     */
+    /**
      * Authenticate a user and issue a new bearer token.
      *
      * This endpoint is used to log in with email and password.
