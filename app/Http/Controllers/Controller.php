@@ -17,6 +17,14 @@ use OpenApi\Annotations as OA;
  *         email="nigun1998@gmail.com"
  *     )
  * )
+ *
+ * @OA\SecurityScheme(
+ *     securityScheme="bearerAuth",
+ *     type="http",
+ *     scheme="bearer",
+ *     bearerFormat="JWT",
+ *     description="Enter your Sanctum token in the format: Bearer <token>"
+ * )
  */
 class Controller extends BaseController
 {
