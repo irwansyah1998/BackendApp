@@ -11,105 +11,133 @@ use OpenApi\Annotations as OA;
 /**
  * @OA\PathItem(
  *     path="/api/user",
+ *
  *     @OA\Get(
  *         path="/api/user",
  *         summary="Get all users",
  *         description="Return a list of all registered users.",
  *         tags={"Users"},
  *         security={{"bearerAuth": {}}},
+ *
  *         @OA\Response(
  *             response=200,
  *             description="Users retrieved successfully",
+ *
  *             @OA\JsonContent(type="array", @OA\Items(ref="#/components/schemas/User"))
  *         ),
+ *
  *         @OA\Response(response=401, description="Unauthorized"),
  *         @OA\Response(response=500, description="Server error")
  *     ),
+ *
  *     @OA\Post(
  *         path="/api/user",
  *         summary="Create a new user",
  *         description="Create and store a new user account.",
  *         tags={"Users"},
+ *
  *         @OA\RequestBody(
  *             required=true,
+ *
  *             @OA\JsonContent(
  *                 required={"name", "email", "password"},
+ *
  *                 @OA\Property(property="name", type="string", example="John Doe"),
  *                 @OA\Property(property="email", type="string", format="email", example="john@example.com"),
  *                 @OA\Property(property="password", type="string", format="password", example="secret123")
  *             )
  *         ),
+ *
  *         @OA\Response(
  *             response=201,
  *             description="User created successfully",
+ *
  *             @OA\JsonContent(ref="#/components/schemas/User")
  *         ),
+ *
  *         @OA\Response(response=401, description="Unauthorized")
  *     )
  * )
  *
  * @OA\PathItem(
  *     path="/api/user/{id}",
+ *
  *     @OA\Get(
  *         path="/api/user/{id}",
  *         summary="Get user by ID",
  *         description="Retrieve a single user by their identifier.",
  *         tags={"Users"},
  *         security={{"bearerAuth": {}}},
+ *
  *         @OA\Parameter(
  *             name="id",
  *             in="path",
  *             required=true,
  *             description="User ID",
+ *
  *             @OA\Schema(type="integer")
  *         ),
+ *
  *         @OA\Response(
  *             response=200,
  *             description="User retrieved successfully",
+ *
  *             @OA\JsonContent(ref="#/components/schemas/User")
  *         ),
+ *
  *         @OA\Response(response=401, description="Unauthorized")
  *     ),
+ *
  *     @OA\Put(
  *         path="/api/user/{id}",
  *         summary="Update a user",
  *         description="Update an existing user record.",
  *         tags={"Users"},
  *         security={{"bearerAuth": {}}},
+ *
  *         @OA\Parameter(
  *             name="id",
  *             in="path",
  *             required=true,
  *             description="User ID",
+ *
  *             @OA\Schema(type="integer")
  *         ),
+ *
  *         @OA\RequestBody(
  *             required=true,
+ *
  *             @OA\JsonContent(
+ *
  *                 @OA\Property(property="name", type="string", example="John Smith"),
  *                 @OA\Property(property="email", type="string", format="email", example="john.smith@example.com"),
  *                 @OA\Property(property="password", type="string", format="password", example="newsecret123")
  *             )
  *         ),
+ *
  *         @OA\Response(
  *             response=200,
  *             description="User updated successfully"
  *         ),
  *         @OA\Response(response=401, description="Unauthorized")
  *     ),
+ *
  *     @OA\Delete(
  *         path="/api/user/{id}",
  *         summary="Delete a user",
  *         description="Delete a user record from the database.",
  *         tags={"Users"},
  *         security={{"bearerAuth": {}}},
+ *
  *         @OA\Parameter(
  *             name="id",
  *             in="path",
  *             required=true,
  *             description="User ID",
+ *
  *             @OA\Schema(type="integer")
  *         ),
+ *
  *         @OA\Response(response=204, description="User deleted successfully"),
  *         @OA\Response(response=401, description="Unauthorized")
  *     )
@@ -117,28 +145,36 @@ use OpenApi\Annotations as OA;
  *
  * @OA\PathItem(
  *     path="/api/login",
+ *
  *     @OA\Post(
  *         path="/api/login",
  *         summary="Login and generate token",
  *         description="Authenticate a user and return a Sanctum bearer token for protected API access.",
  *         tags={"Auth"},
+ *
  *         @OA\RequestBody(
  *             required=true,
+ *
  *             @OA\JsonContent(
  *                 required={"email", "password"},
+ *
  *                 @OA\Property(property="email", type="string", format="email", example="user1@example.com"),
  *                 @OA\Property(property="password", type="string", format="password", example="password1")
  *             )
  *         ),
+ *
  *         @OA\Response(
  *             response=200,
  *             description="Login successful",
+ *
  *             @OA\JsonContent(
+ *
  *                 @OA\Property(property="message", type="string", example="Login successful"),
  *                 @OA\Property(property="token", type="string", example="1|abcxyz123456"),
  *                 @OA\Property(property="user", ref="#/components/schemas/User")
  *             )
  *         ),
+ *
  *         @OA\Response(response=401, description="Invalid credentials")
  *     )
  * )
@@ -226,7 +262,7 @@ class UserController extends Controller
     {
         $validated = $request->validate([
             'name' => 'sometimes|required|string|max:255',
-            'email' => ['sometimes', 'required', 'email', 'unique:users,email,' . $user->id],
+            'email' => ['sometimes', 'required', 'email', 'unique:users,email,'.$user->id],
             'password' => 'sometimes|required|string|min:8',
         ]);
 

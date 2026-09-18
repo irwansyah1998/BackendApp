@@ -2,7 +2,6 @@
 
 namespace Tests\Feature;
 
-use App\Models\Product;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -43,7 +42,7 @@ class ProductApiTest extends TestCase
         $this->getJson('/api/products')
             ->assertUnauthorized();
 
-        $createResponse = $this->withHeader('Authorization', 'Bearer ' . $token)
+        $createResponse = $this->withHeader('Authorization', 'Bearer '.$token)
             ->postJson('/api/products', [
                 'name' => 'Laptop Gaming',
                 'price' => 14999.99,
@@ -57,21 +56,21 @@ class ProductApiTest extends TestCase
 
         $productId = $createResponse->json('id');
 
-        $this->withHeader('Authorization', 'Bearer ' . $token)
-            ->getJson('/api/products/' . $productId)
+        $this->withHeader('Authorization', 'Bearer '.$token)
+            ->getJson('/api/products/'.$productId)
             ->assertOk()
             ->assertJsonPath('id', $productId);
 
-        $this->withHeader('Authorization', 'Bearer ' . $token)
-            ->putJson('/api/products/' . $productId, [
+        $this->withHeader('Authorization', 'Bearer '.$token)
+            ->putJson('/api/products/'.$productId, [
                 'name' => 'Laptop Gaming Updated',
                 'price' => 15999.99,
             ])
             ->assertOk()
             ->assertJsonPath('message', 'Product updated successfully');
 
-        $this->withHeader('Authorization', 'Bearer ' . $token)
-            ->deleteJson('/api/products/' . $productId)
+        $this->withHeader('Authorization', 'Bearer '.$token)
+            ->deleteJson('/api/products/'.$productId)
             ->assertNoContent();
 
         $this->assertDatabaseMissing('products', ['id' => $productId]);

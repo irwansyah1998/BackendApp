@@ -12,6 +12,7 @@ use OpenApi\Annotations as OA;
  *     title="API Documentation",
  *     version="0.1.5",
  *     description="This is API Documentation.",
+ *
  *     @OA\Contact(
  *         name="Indra Gunawan",
  *         email="nigun1998@gmail.com"
