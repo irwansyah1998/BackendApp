@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use OpenApi\Annotations as OA;
@@ -187,7 +189,7 @@ class UserController extends Controller
      * This function is used for listing user data in the admin or internal API.
      * It is protected by Sanctum token authentication.
      */
-    public function index()
+    public function index(): Collection
     {
         return User::all();
     }
@@ -199,7 +201,7 @@ class UserController extends Controller
      * If the credentials match, Laravel creates a personal access token
      * and returns it to the client for later API requests.
      */
-    public function login(Request $request)
+    public function login(Request $request): JsonResponse
     {
         $validated = $request->validate([
             'email' => 'required|email',
@@ -229,7 +231,7 @@ class UserController extends Controller
      * This method validates the request data, hashes the password,
      * and stores the new user in the database.
      */
-    public function store(Request $request)
+    public function store(Request $request): JsonResponse
     {
         $validated = $request->validate([
             'name' => 'required|string|max:255',
@@ -247,7 +249,7 @@ class UserController extends Controller
      *
      * Laravel resolves the user ID from the URL and fetches the matching record.
      */
-    public function show(User $user)
+    public function show(User $user): JsonResponse
     {
         return response()->json($user, 200);
     }
@@ -258,7 +260,7 @@ class UserController extends Controller
      * This method accepts partial or full user data and updates the existing record.
      * If a new password is provided, it is hashed before saving.
      */
-    public function update(Request $request, User $user)
+    public function update(Request $request, User $user): JsonResponse
     {
         $validated = $request->validate([
             'name' => 'sometimes|required|string|max:255',
@@ -283,7 +285,7 @@ class UserController extends Controller
      *
      * This removes the existing user from the database and returns a 204 no-content response.
      */
-    public function destroy(User $user)
+    public function destroy(User $user): JsonResponse
     {
         $user->delete();
 
