@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Product;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use OpenApi\Annotations as OA;
 
@@ -147,7 +149,7 @@ class ProductController extends Controller
      * This method is used to retrieve the full product list for the client app.
      * It returns every product record currently saved in the products table.
      */
-    public function index()
+    public function index(): Collection
     {
         return Product::all();
     }
@@ -158,7 +160,7 @@ class ProductController extends Controller
      * This method validates the incoming request, then saves a new product record.
      * It is used for adding new items to the catalog or inventory list.
      */
-    public function store(Request $request)
+    public function store(Request $request): JsonResponse
     {
         $validated = $request->validate([
             'name' => 'required|string|max:255',
@@ -175,7 +177,7 @@ class ProductController extends Controller
      * Laravel resolves the product from the route parameter automatically.
      * This is useful when fetching detailed information for a single item.
      */
-    public function show(Product $product)
+    public function show(Product $product): JsonResponse
     {
         return response()->json($product, 200);
     }
@@ -186,7 +188,7 @@ class ProductController extends Controller
      * This method validates the incoming fields and updates the selected product.
      * It supports partial updates, so only the fields sent by the client are changed.
      */
-    public function update(Request $request, Product $product)
+    public function update(Request $request, Product $product): JsonResponse
     {
         $validated = $request->validate([
             'name' => 'sometimes|required|string|max:255',
@@ -208,7 +210,7 @@ class ProductController extends Controller
      * This method removes the selected product from the database.
      * It returns a 204 response to indicate successful deletion with no content.
      */
-    public function destroy(Product $product)
+    public function destroy(Product $product): JsonResponse
     {
         $product->delete();
 
