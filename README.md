@@ -1,8 +1,46 @@
+<div align="center">
+
+![BackendApp API](https://img.shields.io/badge/BackendApp-API-166B50?style=for-the-badge&logo=laravel&logoColor=white)
+
 # BackendApp API
+
+**A clear, token-authenticated backend for products and users.**
+
+[![PHP](https://img.shields.io/badge/PHP-8.1%2B-777BB4?style=flat-square&logo=php&logoColor=white)](https://www.php.net/)
+[![Laravel](https://img.shields.io/badge/Laravel-10.48.22-FF2D20?style=flat-square&logo=laravel&logoColor=white)](https://laravel.com/)
+[![Sanctum](https://img.shields.io/badge/Auth-Sanctum-166B50?style=flat-square)](https://laravel.com/docs/10.x/sanctum)
+[![OpenAPI](https://img.shields.io/badge/Docs-OpenAPI%203.0-6BA539?style=flat-square)](https://swagger.io/specification/)
+
+</div>
 
 BackendApp is a Laravel 10 API for authentication and product management. It uses Laravel Sanctum for bearer-token authentication and L5 Swagger for interactive API documentation.
 
-The root URL also includes a small BackendApp API landing page with links to the API documentation and a summary of the available capabilities.
+The root URL includes a branded BackendApp API landing page with links to the API documentation and a summary of the available capabilities.
+
+## At a Glance
+
+| Item | Version / status |
+| --- | --- |
+| Application | BackendApp API; application release version is not separately defined |
+| Framework | Laravel 10.48.22 |
+| Runtime | PHP 8.1+ |
+| Authentication | Laravel Sanctum 3.3.3 |
+| API documentation | L5 Swagger 8.6.2 / OpenAPI 3.0 |
+| Test suite | PHPUnit 10; 4 tests and 29 assertions currently passing |
+
+## Contents
+
+- [Technology Stack](#technology-stack)
+- [Requirements](#requirements)
+- [Installation](#installation)
+- [API Documentation](#api-documentation)
+- [Authentication](#authentication)
+- [API Routes](#api-routes)
+- [Development Commands](#development-commands)
+- [Testing](#testing)
+- [Security Notes](#security-notes)
+- [Troubleshooting](#troubleshooting)
+- [Project Structure](#project-structure)
 
 ## Technology Stack
 
