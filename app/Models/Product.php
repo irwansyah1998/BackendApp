@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use OpenApi\Annotations as OA;
 
@@ -12,6 +11,7 @@ use OpenApi\Annotations as OA;
  *     type="object",
  *     title="Product",
  *     description="Product model",
+ *
  *     @OA\Property(property="id", type="integer", format="int64", description="Product ID", example=1),
  *     @OA\Property(property="name", type="string", description="Product name", example="Sample Product"),
  *     @OA\Property(property="price", type="number", format="float", description="Product price", example=19.99),

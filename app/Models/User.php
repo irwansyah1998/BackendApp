@@ -15,6 +15,7 @@ use OpenApi\Annotations as OA;
  *     title="User",
  *     description="User model",
  *     required={"id", "name", "email"},
+ *
  *     @OA\Property(property="id", type="integer", format="int64", description="User ID", example=1),
  *     @OA\Property(property="name", type="string", description="User name", example="John Doe"),
  *     @OA\Property(property="email", type="string", format="email", description="User email", example="john@example.com"),
